@@ -61,7 +61,6 @@ fn main() -> ExitCode {
     }
 }
 
-///
 fn copy_file(target_dir: &PathBuf, item_path: PathBuf) {
     // Used to determine if path is to a file or directory.
     let md = metadata(&item_path).unwrap();
