@@ -1,5 +1,4 @@
 extern crate notify;
-extern crate fs_extra;
 
 use std::{
     env,
