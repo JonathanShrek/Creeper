@@ -5,8 +5,14 @@ use std::{
 };
 
 pub fn send_email(item_path: &PathBuf) {
+  let recipients = vec![
+    "jshreckengost@itreconomics.com",
+    "kobrien@itreconomics.com",
+    "asievers@itreconomics.com"
+  ];
+
   // Replace these values with your email content and recipient
-  let to = "jshreckengost@itreconomics.com; kobrien@itreconomics.com; asievers@itreconomics.com";
+  let to = recipients.join(", ");
   let subject = "Unknown PHP File Found and Removed";
   let body = format!("PHP file found at: {:?}", item_path); 
 
