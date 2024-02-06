@@ -13,6 +13,7 @@ pub fn send_email(item_path: &PathBuf) {
 
   // Replace these values with your email content and recipient
   let to = recipients.join(", ");
+  let from = "no-reply@itreconomics.com";
   let subject = "Unknown PHP File Found and Removed";
   let body = format!("PHP file found at: {:?}", item_path); 
 
@@ -25,7 +26,7 @@ pub fn send_email(item_path: &PathBuf) {
   match result {
       Ok(mut child) => {
           // Write email content to the child process's stdin
-          let email_content = format!("To: {}\nSubject: {}\n\n{}", to, subject, body);
+          let email_content = format!("From: {}\nTo: {}\nSubject: {}\n\n{}", from, to, subject, body);
           if let Some(mut stdin) = child.stdin.take() {
               stdin.write_all(email_content.as_bytes()).expect("Failed to write to stdin");
           }
