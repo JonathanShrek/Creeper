@@ -1,5 +1,7 @@
 use std::{
-  io::Write, path::PathBuf, process::Command
+  io::Write, 
+  path::PathBuf, 
+  process::Command
 };
 
 pub fn send_email(item_path: &PathBuf) {
