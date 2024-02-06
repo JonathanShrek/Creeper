@@ -8,7 +8,9 @@ pub fn send_email(item_path: &PathBuf) {
   let recipients = vec![
     "jshreckengost@itreconomics.com",
     "kobrien@itreconomics.com",
-    "asievers@itreconomics.com"
+    "asievers@itreconomics.com",
+    "joe.beaulieu@itreconomics.com",
+    "bklardie@itreconomics.com"
   ];
 
   // Replace these values with your email content and recipient
@@ -25,7 +27,7 @@ pub fn send_email(item_path: &PathBuf) {
   match result {
       Ok(mut child) => {
           // Write email content to the child process's stdin
-          let email_content = format!("To: {}\nSubject: {}\n\n{}", from, to, subject, body);
+          let email_content = format!("To: {}\nSubject: {}\n\n{}", to, subject, body);
           if let Some(mut stdin) = child.stdin.take() {
               stdin.write_all(email_content.as_bytes()).expect("Failed to write to stdin");
           }
