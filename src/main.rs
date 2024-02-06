@@ -1,6 +1,7 @@
 extern crate notify;
 
 mod file_actions;
+mod report;
 
 use std::{
     env,
@@ -21,22 +22,16 @@ fn main() -> ExitCode {
     let args: Vec<String> = env::args().collect();
 
     // Check that args were provided.
-    if args.len() < 3 {
-        println!("You must provide a watch directory and target directory.");
+    if args.len() < 2 {
+        println!("You must provide a watch directory");
         return ExitCode::FAILURE;
     }
 
     let watch_dir = Path::new(&args[1]).to_path_buf();
-    let target_dir = Path::new(&args[2]).to_path_buf();
 
     // Check to determine provided paths exist.
     if !watch_dir.exists() {
         println!("Please provide a valid watch directory.");
-        return ExitCode::FAILURE;
-    }
-
-    if !target_dir.exists() {
-        println!("Please provide a valid target directory");
         return ExitCode::FAILURE;
     }
 
@@ -49,17 +44,24 @@ fn main() -> ExitCode {
 
     // Add a path to be watched. All files and directories at that path and
     // below will be monitored for changes.
-    watcher.watch(watch_dir, RecursiveMode::NonRecursive).unwrap();
+    watcher.watch(watch_dir, RecursiveMode::Recursive).unwrap();
 
     loop {
         match rx.recv() {
             Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
-                // Only copy file if we have a create op code.
+                // if file created and extension is php
                 if op == notify::op::CREATE {
-                    file_actions::copy(&target_dir, path);
+                    if let Some(file_name) = path.file_name() {
+                        if file_name.to_string_lossy().ends_with(".php") {
+                            // send email to notify of a found php file
+                            report::send_email(&path);
+
+                            println!("Found php file. Deleting file.");
+                            file_actions::delete(path);
+                        }
+                    }
                 }
             },
-            // Ok(event) => println!("broken event: {:?}", event),
             Err(e) => println!("watch error: {:?}", e),
             _ => println!("An unknown error has occured")
         }
