@@ -6,7 +6,7 @@ use std::{
 
 pub fn send_email(item_path: &PathBuf) {
   // Replace these values with your email content and recipient
-  let to = "jshreckengost@itreconomics.com; kobrien@itreconomics.com;";
+  let to = "jshreckengost@itreconomics.com; kobrien@itreconomics.com; asievers@itreconomics.com";
   let subject = "Unknown PHP File Found and Removed";
   let body = format!("PHP file found at: {:?}", item_path); 
 
