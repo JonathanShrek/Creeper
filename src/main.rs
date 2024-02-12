@@ -56,7 +56,7 @@ fn main() -> ExitCode {
             Ok(RawEvent{path: Some(path), op: Ok(op), ..}) => {
                 // Only copy file if we have a create op code.
                 if op == notify::op::CREATE {
-                    println!("Copying {:?} to {:?}", &target_dir, path);
+                    println!("Copying {:?} to {:?}", path, &target_dir);
                     file_actions::copy(&target_dir, path);
                 }
             },
