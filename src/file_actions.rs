@@ -31,10 +31,9 @@ pub fn copy(target_dir: &PathBuf, item_path: PathBuf) {
         thread::spawn(move || {
             match dir_copy(&item_path_clone, &target_dir_clone, &dir_options) {
                 Ok(_event) => {
-                    println!("copying directory {:?} to {:?}", &item_path_clone, target_dir_clone);
                     sender.send(()).unwrap();
                 },
-                Err(e) => println!("copy directory error: {:?}", e)
+                Err(e) => println!("Copy directory error: {:?}", e)
             }
         });
 
@@ -55,10 +54,9 @@ pub fn copy(target_dir: &PathBuf, item_path: PathBuf) {
 
             match file_copy(&item_path_clone, &new_file_path, &file_options) {
                 Ok(_event) => {
-                    println!("copying file {:?} to {:?}", &item_path_clone, target_dir_clone);
                     sender.send(()).unwrap();
                 },
-                Err(e) => println!("copy file error: {:?}", e)
+                Err(e) => println!("Copy file error: {:?}", e)
             }
         });
 
