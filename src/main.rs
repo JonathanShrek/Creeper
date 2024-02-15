@@ -6,7 +6,9 @@ use std::{
     env,
     path::Path,
     process::ExitCode,
-    sync::mpsc::channel
+    sync::mpsc::channel,
+    time::Duration,
+    thread
 };
 
 use notify::{
@@ -57,6 +59,10 @@ fn main() -> ExitCode {
                 // Only copy file if we have a create op code.
                 if op == notify::op::CREATE {
                     println!("Copying {:?} to {:?}", path, &target_dir);
+
+                    // sleep to allow time for the item to be completely moved after downloading
+                    thread::sleep(Duration::from_secs(10));
+
                     file_actions::copy(&target_dir, path);
                 }
             },
