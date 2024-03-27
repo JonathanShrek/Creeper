@@ -1,7 +1,10 @@
 extern crate notify;
+extern crate glob;
 
 mod file_actions;
 mod report;
+
+use glob::Pattern;
 
 use std::{
     env,
@@ -52,7 +55,10 @@ fn main() -> ExitCode {
                 // if file created and extension is php
                 if op == notify::op::CREATE {
                     if let Some(file_name) = path.file_name() {
-                        if file_name.to_string_lossy().ends_with(".php") {
+                        let file_name_str = file_name.to_string_lossy();
+                        let pattern_str = "*.php*";
+
+                        if Pattern::new(pattern_str).unwrap().matches(&file_name_str) {
                             // send email to notify of a found php file
                             report::send_email(&path);
 

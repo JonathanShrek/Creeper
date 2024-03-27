@@ -7,10 +7,10 @@ use std::{
 pub fn send_email(item_path: &PathBuf) {
   let recipients = vec![
     "jshreckengost@itreconomics.com",
-    "kobrien@itreconomics.com",
-    "asievers@itreconomics.com",
-    "joe.beaulieu@itreconomics.com",
-    "bklardie@itreconomics.com"
+    //"kobrien@itreconomics.com",
+    //"asievers@itreconomics.com",
+    //"joe.beaulieu@itreconomics.com",
+    //"bklardie@itreconomics.com"
   ];
 
   // Replace these values with your email content and recipient
